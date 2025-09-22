@@ -259,15 +259,13 @@ kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 8080:443 -
 <img width="1919" height="961" alt="kubernetes_dashboard" src="https://github.com/user-attachments/assets/153f4daa-d088-4841-809f-1e6f672ade73" />
 
 
-- Gnerate Token to sign-in :
-Create a token for dashboard access:
+- Gnerate Token to sign-in 
+
 ```bash
 kubectl -n kubernetes-dashboard create token admin-user
-``` 
+```
 
-- Sign in using the generated token.
-Accessing Kubernetes-dashboard on Browser:
-
+- Sign in using the generated token : Accessing Kubernetes-dashboard on Browser
 <img width="1909" height="973" alt="kubernetes_dashboard_signed_in" src="https://github.com/user-attachments/assets/2704d2be-2805-4c6c-ad4f-9ba366426e18" />
 
 - View deployments on Dashboard
