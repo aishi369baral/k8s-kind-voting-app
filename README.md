@@ -330,11 +330,11 @@ Grafana
 
 
 ### Prometheus Usage:
-- Prometheus Dashboard target health status:
+- Prometheus Dashboard **target health status**:
 <img width="1905" height="976" alt="Prometheus_target_health" src="https://github.com/user-attachments/assets/80ce3318-6a5b-44f3-8b78-dc082c1902de" />
 
 
-- CPU usage Monitoring of App : via  Prometheus
+- **CPU usage Monitoring** of App : via  Prometheus
 **promQL :** sum (rate (container_cpu_usage_seconds_total{namespace="default"}[1m])) / sum (machine_cpu_cores) * 100
 <img width="1909" height="926" alt="CPU_monitoring_in_Prometheus" src="https://github.com/user-attachments/assets/a58df97b-2868-4eb4-8040-514c148d0917" />
 
@@ -356,7 +356,7 @@ Administration -> user and access -> users -> new user
 user created
 
 
-- Keep role of the demo user as Viewer
+- Keep role of the demo user as **Viewer**
 <img width="1915" height="967" alt="grafana_user_role" src="https://github.com/user-attachments/assets/6c670737-f367-4ccc-9732-569b85eeb840" />
 
 
@@ -367,17 +367,17 @@ Now any user can view the Grafana dashboard with the credentials of the user cre
 
 - Adding Datasources to Grafana:
 Connections -> Datasources
-Data Sources**(Prometheus and Alert Manager)** was by default added when we deployed the Prometheus and Grafana Stack using Helm
+Data Sources **(Prometheus and Alert Manager)** was by default added when we deployed the Prometheus and Grafana Stack using **Helm**
 <img width="1914" height="960" alt="DataSources_Grafana" src="https://github.com/user-attachments/assets/b5b69645-3ace-4273-953b-04edb0d2e970" />
 
 
 - Build a Dashboard:
 Click on build a dashboard for Prometheus DataSource
-Then Add Visualization
-Select Prometheus DataSource
+Then Add **Visualization**
+Select **Prometheus DataSource**
 
 - View CPU Usage in the DashBoard:
-choose metrics as container-cpu-cfs-periods-total and label filters as namespace and kube-system
+choose metrics as **container-cpu-cfs-periods-total** and label filters as **namespace** and **kube-system**
 <img width="1912" height="965" alt="CPU_metrics_in_Grafana_DashBoard" src="https://github.com/user-attachments/assets/6a6317c3-145b-413f-b9a3-af4d80f730de" />
 
 
