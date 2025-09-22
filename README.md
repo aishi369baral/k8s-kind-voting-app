@@ -187,7 +187,8 @@ Applications -> New App
 ```bash
 kubectl get pods
 ```
-(pic) check pods running via kubectl
+<img width="1476" height="224" alt="check_pods_running_via_kubectl" src="https://github.com/user-attachments/assets/5341ab61-ca85-4983-93b7-95c76e1f9da8" />
+
 
 
 ### Access the App in Browser:
@@ -195,7 +196,8 @@ kubectl get pods
 cd k8s-install
 kubectl get svc
 ```
-(pic)
+<img width="1473" height="256" alt="service-type_App_exposins_on_Browser" src="https://github.com/user-attachments/assets/32a947cc-ce32-42d0-8b5a-d34c3deb1b7d" />
+
 
 ```bash
 kubectl port-forward svc/vote 5000:5000 --address=0.0.0.0 &
@@ -203,31 +205,39 @@ kubectl port-forward svc/result 5001:5001 --address=0.0.0.0 &
 ```
 
 - Open 5000-5001 port range in master
-(pic)
+<img width="1916" height="966" alt="App_port_range_opened" src="https://github.com/user-attachments/assets/9dc8bf66-aaf6-4a1a-a34b-4c5707576d85" />
 
 
 
-- Access Vote
-(pic)
-- Access result
-(pic)
+
+#### Access Vote
+<img width="1919" height="965" alt="App_vote" src="https://github.com/user-attachments/assets/7760e3d4-f7d5-4298-8362-099c09e5854f" />
+
+#### Access result
+<img width="1913" height="966" alt="App_result" src="https://github.com/user-attachments/assets/f70f9002-114f-4140-ae32-b0bf8bea6a11" />
+
 
 
 - Vote and view Result in App:
 1 vote for cat
-(pic)
+<img width="1919" height="991" alt="Voted_cat" src="https://github.com/user-attachments/assets/5b0a7757-6427-4224-948a-d7969121aeff" />
+
 View result
-(pic)
+<img width="1916" height="971" alt="result_cat" src="https://github.com/user-attachments/assets/d7a76b1c-85f0-4e25-b2f3-263f086b5da1" />
+
 
 - open vote page in incognito
 1 vote for dog
-(pic)
+<img width="1912" height="960" alt="vote_for_dog" src="https://github.com/user-attachments/assets/a1a53851-0e9d-43d6-8d48-08a18690d8ea" />
+
 view result
-(pic)
+<img width="1919" height="967" alt="result_dog" src="https://github.com/user-attachments/assets/84f5c15a-ed51-4b63-8f3b-4ab599d1f747" />
+
 
 
 ### Creating kubernetes dashboard:
 
+```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/v2.7.0/aio/deploy/recommended.yaml
 
 cd k8s-install
@@ -235,118 +245,149 @@ cd k8s-install
 vim dashboard.yml
 
 kubectl apply -f dashboard.yml
+```
 
 
-
-Expose Port For the Kubernetes-Dashboard:
+- Expose Port For the Kubernetes-Dashboard:
+```bash
 kubectl get svc -n kubernetes-dashboard
 
 kubectl port-forward svc/kubernetes-dashboard -n kubernetes-dashboard 8080:443 --address=0.0.0.0 &
+```
 
-Open DashBoard on port 8080 (https)
-(pic)
+- Open DashBoard on port 8080 (https)
+<img width="1919" height="961" alt="kubernetes_dashboard" src="https://github.com/user-attachments/assets/153f4daa-d088-4841-809f-1e6f672ade73" />
 
-Gnerate Token to sign-in :
-Create a token for dashboard access:      kubectl -n kubernetes-dashboard create token admin-user
- 
-Sign in using the generated token.
 
+- Gnerate Token to sign-in :
+Create a token for dashboard access:
+```bash
+kubectl -n kubernetes-dashboard create token admin-user
+``` 
+
+- Sign in using the generated token.
 Accessing Kubernetes-dashboard on Browser:
 
-(pic)dashboard-signed in
+<img width="1909" height="973" alt="kubernetes_dashboard_signed_in" src="https://github.com/user-attachments/assets/2704d2be-2805-4c6c-ad4f-9ba366426e18" />
 
+- View deployments on Dashboard
+<img width="1914" height="864" alt="dashboard1" src="https://github.com/user-attachments/assets/4c301708-c92a-4495-b90a-81c29acbb863" />
 
+- View pods on Dashboard
+<img width="1917" height="964" alt="dashboard2" src="https://github.com/user-attachments/assets/36ee7314-62aa-4974-a6d9-fc733400b462" />
 
-Prometheus and Grafana:
+- View services on Dashboard
+<img width="1919" height="875" alt="dashboard4" src="https://github.com/user-attachments/assets/7d26b013-d27e-4e99-8a48-ec0d613a6a89" />
 
-Install Helm package manager:
+- View namespaces on Dashboard
+<img width="1919" height="976" alt="dashboard7" src="https://github.com/user-attachments/assets/0f624b48-c459-4a7e-a71e-284b09866a19" />
+
+- View nodes on Dashboard
+<img width="1919" height="867" alt="dashboard8" src="https://github.com/user-attachments/assets/868f9275-f06e-4148-8793-0af881640934" />
+
+### Monitoring and Visualization : Prometheus and Grafana
+
+- Install Helm package manager:
+```bash
 cd ..
 curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
 chmod +x get_helm.sh
 ./get_helm.sh
+```
+<img width="1467" height="163" alt="helm_installed" src="https://github.com/user-attachments/assets/1524a4e9-7c94-4b0f-b13c-bd4d1a23d565" />
 
-(pic)
 
-Install Kube Prometheus Stack:
+- Install Kube Prometheus Stack:
 
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add stable https://charts.helm.sh/stable
 helm repo update
 kubectl create namespace monitoring
 helm install kind-prometheus prometheus-community/kube-prometheus-stack --namespace monitoring --set prometheus.service.nodePort=30000 --set prometheus.service.type=NodePort --set grafana.service.nodePort=31000 --set grafana.service.type=NodePort --set alertmanager.service.nodePort=32000 --set alertmanager.service.type=NodePort --set prometheus-node-exporter.service.nodePort=32001 --set prometheus-node-exporter.service.type=NodePort
 
-Port-forwarding for Prometheus and grafana:
+```
+
+- Port-forwarding for Prometheus and grafana:
+```bash
 kubectl get svc -n monitoring
 kubectl get namespace
 
 kubectl port-forward svc/kind-prometheus-kube-prome-prometheus -n monitoring 9090:9090 --address=0.0.0.0 &
 kubectl port-forward svc/kind-prometheus-grafana -n monitoring 31000:80 --address=0.0.0.0 &
 
-Open Ports 9090 for prometheus and 31000 for grafana in master
+```
+
+- Open Ports 9090 for prometheus and 31000 for grafana in master
 
 Note: Grafana username: admin password: prom-operator
 
-Access in Browser
+- Access in Browser
 Prometheus
-(pic)
+<img width="1919" height="960" alt="prometheus_dashboard" src="https://github.com/user-attachments/assets/d9879288-dc3e-4c2c-b374-18a8d003c280" />
+
 
 Grafana
-(pic)
+<img width="1919" height="966" alt="Grafana-dashboard" src="https://github.com/user-attachments/assets/8deef0b4-cf47-4396-8a1c-bf7d06bfd780" />
 
 
-Prometheus Dashboard target health status:
-(pic)
-
-CPU usage Monitoring of App : via  Prometheus
-promQL : sum (rate (container_cpu_usage_seconds_total{namespace="default"}[1m])) / sum (machine_cpu_cores) * 100
-(pic)
+### Prometheus Usage:
+- Prometheus Dashboard target health status:
+<img width="1905" height="976" alt="Prometheus_target_health" src="https://github.com/user-attachments/assets/80ce3318-6a5b-44f3-8b78-dc082c1902de" />
 
 
-
-InComing Traffic of App: via  Prometheus
-sum(rate(container_network_receive_bytes_total{namespace="default"}[5m])) by (pod)
-(pic)
+- CPU usage Monitoring of App : via  Prometheus
+**promQL :** sum (rate (container_cpu_usage_seconds_total{namespace="default"}[1m])) / sum (machine_cpu_cores) * 100
+<img width="1909" height="926" alt="CPU_monitoring_in_Prometheus" src="https://github.com/user-attachments/assets/a58df97b-2868-4eb4-8040-514c148d0917" />
 
 
 
-User-Management in Grafana:
-Giving View role to a new user to Grafana Dashboards:
-Creating new user in Grafana:
+
+- InComing Traffic of App: via  Prometheus
+**promQL :** sum(rate(container_network_receive_bytes_total{namespace="default"}[5m])) by (pod)
+<img width="1910" height="970" alt="checking_incoming_traffic_on_prometheus" src="https://github.com/user-attachments/assets/37047650-c93c-4e3f-9775-de607cb67ac0" />
+
+
+
+
+### User-Management in Grafana:
+#### Giving View role to a new user to Grafana Dashboards:
+- Creating new user in Grafana:
 Administration -> user and access -> users -> new user
-(pic)
+<img width="1915" height="970" alt="new_user_grafana" src="https://github.com/user-attachments/assets/bd476de7-7f59-44b8-9754-b716fd17465a" />
 user created
-(pic)
 
-Keep change role of the demo user as Viewer
-(pic)
+
+- Keep role of the demo user as Viewer
+<img width="1915" height="967" alt="grafana_user_role" src="https://github.com/user-attachments/assets/6c670737-f367-4ccc-9732-569b85eeb840" />
+
 
 Now any user can view the Grafana dashboard with the credentials of the user created above
 
 
-Connection establishment in Grafana:
+#### Connection establishment in Grafana:
 
-Adding Datasources to Grafana:
+- Adding Datasources to Grafana:
 Connections -> Datasources
 Data Sources**(Prometheus and Alert Manager)** was by default added when we deployed the Prometheus and Grafana Stack using Helm
+<img width="1914" height="960" alt="DataSources_Grafana" src="https://github.com/user-attachments/assets/b5b69645-3ace-4273-953b-04edb0d2e970" />
 
-Build a Dashboard:
+
+- Build a Dashboard:
 Click on build a dashboard for Prometheus DataSource
 Then Add Visualization
 Select Prometheus DataSource
 
-View CPU Usage in the DashBoard:
+- View CPU Usage in the DashBoard:
 choose metrics as container-cpu-cfs-periods-total and label filters as namespace and kube-system
-(pic)
+<img width="1912" height="965" alt="CPU_metrics_in_Grafana_DashBoard" src="https://github.com/user-attachments/assets/6a6317c3-145b-413f-b9a3-af4d80f730de" />
 
 
 
-Optional: Importing Dashboard Templates of your choice
-Importing Kubernetes dashboard Template in Grafana:
-
-
-
-Delete kind cluster:
+### Delete kind cluster:
+```bash
  kind delete cluster --name=my-cluster
+```
 
 
 
